@@ -12,7 +12,7 @@
 | **Part 2** | Deep Dive: 문헌 검색 (Agent Laboratory / PaSa) | 25분 |
 | **Part 3** | Deep Dive: Related Work 생성 (LitLLM) | 25분 |
 | **Part 4** | Deep Dive: Peer Review 시뮬레이션 (AgentReview) | 20분 |
-| **Part 5** | 토론: 우리 연구실에 맞게 커스텀하기 | 10분 |
+| **Part 5** | 토론: 자신의 연구에 맞게 커스텀하기 | 10분 |
 
 ### 각 Deep Dive 구성
 1. **파악하기** - 코드 구조, 핵심 모듈, 데이터 흐름
@@ -222,7 +222,7 @@ python run_review.py --paper your_paper.pdf --num_reviewers 3
 
 ## Part 5: 토론 - 커스텀 아이디어 (10분)
 
-### 우리 연구실에 맞게 바꾼다면?
+### 자신의 연구에 맞게 바꾼다면?
 
 | 도구 | 커스텀 아이디어 |
 |------|----------------|
