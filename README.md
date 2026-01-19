@@ -240,10 +240,10 @@ python run_review.py --paper your_paper.pdf --num_reviewers 3
 
 | 노트북 | 내용 | Colab 링크 |
 |--------|------|------------|
-| `1_overview.ipynb` | Part 1: 에이전트 개관 + API 테스트 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]() |
-| `2_literature_search.ipynb` | Part 2: Agent Laboratory / PaSa 실습 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]() |
-| `3_related_work.ipynb` | Part 3: LitLLM 실습 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]() |
-| `4_peer_review.ipynb` | Part 4: AgentReview 실습 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]() |
+| `1_overview.ipynb` | Part 1: 에이전트 개관 + API 테스트 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/1_overview.ipynb) |
+| `2_literature_search.ipynb` | Part 2: Agent Laboratory / PaSa 실습 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/2_literature_search.ipynb) |
+| `3_related_work.ipynb` | Part 3: LitLLM 실습 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/3_related_work.ipynb) |
+| `4_peer_review.ipynb` | Part 4: AgentReview 실습 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/4_peer_review.ipynb) |
 
 ### 각 노트북 상세 구조
 
