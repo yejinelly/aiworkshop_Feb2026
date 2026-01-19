@@ -1,0 +1,5 @@
+# Manuscript Evaluator Dependencies
+# For Google Colab, these are installed automatically
+
+google-generativeai>=0.8.5
+python-dotenv>=1.1.1
