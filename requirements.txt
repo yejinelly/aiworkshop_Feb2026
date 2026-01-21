@@ -1,5 +1,24 @@
-# Manuscript Evaluator Dependencies
-# For Google Colab, these are installed automatically
+# AI Literature Review Agent Workshop Dependencies
+# SNU AI Psychology - February 2026
 
+# LLM APIs
 google-generativeai>=0.8.5
+openai>=1.0.0
+
+# Environment & Config
 python-dotenv>=1.1.1
+
+# Academic APIs & Data
+requests>=2.31.0
+semanticscholar>=0.8.0
+arxiv>=2.0.0
+
+# Data Processing
+pandas>=2.0.0
+
+# PDF Processing (for AgentReview)
+PyPDF2>=3.0.0
+
+# Optional: For advanced features
+# langchain>=0.1.0
+# langgraph>=0.1.0

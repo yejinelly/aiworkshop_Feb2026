@@ -318,19 +318,77 @@ display(result)
 | **로컬 venv** | 환경 커스텀 자유 | 설치 필요 |
 | **GitHub Codespaces** | 브라우저에서 VSCode | 월 60시간 무료 |
 
-### Colab 사용 시 주의사항
+### 로컬 vs Colab 비교
 
-```python
-# 1. API Key는 Colab Secrets 사용 (노출 방지)
-from google.colab import userdata
-OPENAI_API_KEY = userdata.get('OPENAI_API_KEY')
+| 항목 | 로컬 환경 | Google Colab |
+|------|----------|--------------|
+| **설치** | Python, 패키지 필요 | 불필요 ✅ |
+| **준비 시간** | 15분 | 3분 ✅ |
+| **Cursor 사용** | 가능 ✅ | 불가능 |
+| **워크샵 후 활용** | 그대로 사용 ✅ | 세션마다 초기화 |
+| **커스텀** | 자유로움 ✅ | 제한적 |
+| **추천 대상** | 개발 환경 있는 분 | 빠른 실습 원하는 분 |
 
-# 2. 대용량 모델은 GPU 런타임 필요
-# Runtime > Change runtime type > GPU
+**권장:** 로컬 환경 (Cursor + Claude Code 활용 가능)
+**백업:** Colab (설치 실패 시)
 
-# 3. 세션 종료 시 설치된 패키지 초기화됨
-# 매번 !pip install 필요
+---
+
+## 환경 설정
+
+### 🖥️ 로컬 환경 (권장)
+
+**준비 시간: 15분**
+
+```bash
+# 1. 저장소 클론
+git clone https://github.com/yejinelly/aiworkshop_Feb2026.git
+cd aiworkshop_Feb2026
+
+# 2. 가상환경 생성 (macOS/Linux)
+python -m venv .venv
+source .venv/bin/activate
+
+# Windows
+python -m venv .venv
+.venv\Scripts\activate
+
+# 3. 패키지 설치
+pip install -r requirements.txt
+
+# 4. API Key 설정
+# 4-1. .env.example을 .env로 복사
+cp .env.example .env
+
+# 4-2. .env 파일을 열고 your_gemini_api_key_here를 실제 key로 교체
+# GEMINI_API_KEY=실제_발급받은_key
+
+# 5. VSCode/Cursor에서 notebooks/ 폴더의 .ipynb 파일 열기
 ```
+
+**장점:**
+- Cursor + Claude Code 사용 가능
+- 워크샵 후에도 그대로 활용 가능
+- 커스텀 자유로움
+
+**상세 가이드:** [SETUP.md](SETUP.md)
+
+---
+
+### ☁️ Google Colab (백업)
+
+**준비 시간: 3분**
+
+로컬 환경 설정이 어려운 경우 Colab을 사용하세요.
+
+1. Colab 배지 클릭 (각 노트북 링크 참고)
+2. 좌측 🔑 아이콘 > Colab Secrets에 `GEMINI_API_KEY` 추가
+3. Cell 실행
+
+**장점:**
+- 설치 불필요
+- GPU 무료 사용
+- 즉시 실습 가능
 
 ---
 
@@ -343,9 +401,24 @@ OPENAI_API_KEY = userdata.get('OPENAI_API_KEY')
 - [ ] Colab 노트북 배포 확인
 
 ### 참가자
-- [ ] Google 계정 (Colab 접속용)
-- [ ] 본인 연구 주제 또는 논문 초안
-- [ ] (선택) OpenAI API key - 없으면 발표자 key 공유
+
+**필수 준비:**
+- [ ] **Gemini API Key** 발급 (5분, 무료)
+  - https://aistudio.google.com/apikey
+  - [발급 가이드](SETUP.md#5-api-key-설정)
+- [ ] 본인 연구 주제 또는 논문 초안 (실습용)
+
+**환경 선택 (둘 중 하나):**
+- [ ] **로컬 환경** (권장)
+  - Python 3.10+, VSCode/Cursor
+  - [설정 가이드](SETUP.md#옵션-a-로컬-환경-권장)
+
+- [ ] **Google Colab** (백업)
+  - Google 계정만 있으면 됨
+  - [사용 가이드](SETUP.md#옵션-b-google-colab-백업)
+
+**선택사항:**
+- [ ] OpenAI API key (Part 2, 3의 고급 기능용)
 
 ---
 
