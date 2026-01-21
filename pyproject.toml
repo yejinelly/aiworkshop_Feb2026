@@ -29,6 +29,11 @@ dependencies = [
     "PyPDF2>=3.0.0",
     "llama-index-readers-file>=0.1.0",
 
+    # AgentReview CLI dependencies
+    "rich>=13.0.0",
+    "colorama>=0.4.6",
+    "prompt_toolkit>=3.0.0",
+
     # Dataset Access (for PeerRead in Part 5)
     "datasets>=2.14.0",
 ]
