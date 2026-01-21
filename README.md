@@ -12,7 +12,8 @@
 | **Part 2** | Deep Dive: 문헌 검색 (Agent Laboratory / PaSa) | 25분 |
 | **Part 3** | Deep Dive: Related Work 생성 (LitLLM) | 25분 |
 | **Part 4** | Deep Dive: Peer Review 시뮬레이션 (AgentReview) | 20분 |
-| **Part 5** | 토론: 자신의 연구에 맞게 커스텀하기 | 10분 |
+| **Part 5** | Advanced: Few-Shot Learning (선택) | 15분 |
+| **Part 6** | 토론: 자신의 연구에 맞게 커스텀하기 | 10분 |
 
 ### 각 Deep Dive 구성
 1. **파악하기** - 코드 구조, 핵심 모듈, 데이터 흐름
@@ -30,7 +31,8 @@ aiworkshop_Feb2026/
 │   ├── 1_overview.ipynb             # Part 1: 에이전트 개관
 │   ├── 2_literature_search.ipynb    # Part 2: 문헌 검색
 │   ├── 3_related_work.ipynb         # Part 3: Related Work
-│   └── 4_peer_review.ipynb          # Part 4: Peer Review
+│   ├── 4_peer_review.ipynb          # Part 4: Peer Review
+│   └── 5_advanced_review.ipynb      # Part 5: Few-Shot Learning (선택)
 └── examples/
     ├── sample_abstract.txt          # 테스트용 초록
     └── sample_paper.pdf             # 테스트용 논문
@@ -53,7 +55,7 @@ aiworkshop_Feb2026/
 | [GPT-Researcher](https://github.com/assafelovic/gpt-researcher) | 24.9k | 웹검색 → 보고서 | 웹 (Tavily) |
 | [AI-Scientist](https://github.com/SakanaAI/AI-Scientist) | 12k | 아이디어→논문 자동화 | Semantic Scholar |
 | [PaperQA2](https://github.com/Future-House/paper-qa) | 8k | PDF RAG Q&A | Semantic Scholar |
-| [**Agent Laboratory**](https://github.com/SamuelSchmidgall/AgentLaboratory) | 5.2k | **문헌→실험→보고서** | **arXiv ⭐** |
+| [**Agent Laboratory**](https://github.com/SamuelSchmidgall/AgentLaboratory) | 5.2k | **문헌 검색** | **arXiv ⭐** |
 | [**PaSa**](https://github.com/bytedance/pasa) | 1.5k | **논문 검색 특화** | **arXiv + Scholar ⭐** |
 | [**AgentReview**](https://github.com/ahren09/agentreview) | - | **Peer Review 시뮬레이션** | 없음 (EMNLP 2024) |
 | [**LitLLM**](https://github.com/ServiceNow/litllm) | - | **Related Work 생성** | Semantic Scholar (TMLR 2024) |
@@ -73,24 +75,19 @@ aiworkshop_Feb2026/
 ```
 AgentLaboratory/
 ├── agents/
-│   ├── literature_agent.py   # 문헌 검색 에이전트
-│   ├── experiment_agent.py   # 실험 에이전트
-│   └── report_agent.py       # 보고서 에이전트
+│   └── literature_agent.py   # 문헌 검색 에이전트
 ├── tools/
 │   └── arxiv_search.py       # arXiv API 래퍼
 └── run.py
 ```
 
-**핵심 흐름:**
-1. 연구 주제 입력
-2. arXiv API로 관련 논문 검색
-3. 논문 요약 + 실험 제안
-4. 보고서 생성
+**핵심 기능:** arXiv API로 관련 논문 검색 및 요약
+💡 실험 설계/보고서 기능도 있지만, 워크샵에서는 **문헌 검색**만 사용
 
 ```bash
 git clone https://github.com/SamuelSchmidgall/AgentLaboratory
 cd AgentLaboratory && pip install -r requirements.txt
-python run.py --topic "your research topic"
+python run.py --agent literature --topic "your research topic"
 ```
 
 ### PaSa (Paper Search Agent)
@@ -220,7 +217,66 @@ python run_review.py --paper your_paper.pdf --num_reviewers 3
 
 ---
 
-## Part 5: 토론 - 커스텀 아이디어 (10분)
+## Part 5: Advanced - Few-Shot Learning (15분, 선택)
+
+> **목표**: PeerRead 데이터셋으로 리뷰 품질 향상
+
+⚠️ **선택 실습**: Part 4 완료 후 시간이 있을 때 진행하세요.
+
+### 5-1. 파악하기: PeerRead 데이터셋
+
+**PeerRead**는 최초의 공개 peer review 데이터셋 (NAACL 2018)
+
+| 항목 | 내용 |
+|------|------|
+| **규모** | 14K+ 논문, 10K+ expert reviews |
+| **출처** | ACL, NeurIPS, ICLR |
+| **접근** | Hugging Face에서 즉시 사용 가능 |
+
+**Why PeerRead?**
+- Review-CoT (142k reviews)는 공개 안됨
+- PeerRead는 Hugging Face 3줄로 로딩 가능
+- Few-shot learning에 충분한 품질
+
+### 5-2. 써보기: Few-Shot Learning
+
+```python
+from datasets import load_dataset
+
+# PeerRead 로딩
+peerread = load_dataset("allenai/peer_read", "full", split="train")
+
+# 고품질 리뷰 5개 샘플링
+examples = [r for r in peerread if r['RECOMMENDATION'] == 'accept'][:5]
+
+# Few-shot 프롬프트 구성
+prompt = f"""
+Here are examples of high-quality peer reviews:
+
+Example 1: {examples[0]['COMMENTS']}
+Example 2: {examples[1]['COMMENTS']}
+...
+
+Now review this paper:
+{your_paper}
+"""
+```
+
+### 5-3. 바꿔보기: 분야별 커스텀
+
+| 수정 포인트 | 방법 |
+|-------------|------|
+| **분야 필터링** | 키워드로 심리학 리뷰만 추출 |
+| **길이 조절** | 짧은/긴 리뷰로 스타일 선택 |
+| **accept/reject** | 엄격한 리뷰 vs 긍정적 리뷰 |
+
+**참고 자료**:
+- [PeerRead GitHub](https://github.com/allenai/PeerRead)
+- [PeerRead Paper](https://arxiv.org/abs/1804.09635)
+
+---
+
+## Part 6: 토론 - 커스텀 아이디어 (10분)
 
 ### 자신의 연구에 맞게 바꾼다면?
 
@@ -229,7 +285,7 @@ python run_review.py --paper your_paper.pdf --num_reviewers 3
 | **Agent Laboratory** | PubMed API 모듈 추가 |
 | **PaSa** | 심리학 저널 필터링 |
 | **LitLLM** | 메타분석용 "효과크기 요약" 모드 |
-| **AgentReview** | 지도교수님 피드백 스타일 학습 |
+| **AgentReview** | PeerRead few-shot으로 품질 개선 |
 | **파이프라인** | 검색→Related Work→Review 연결
 
 ---
@@ -244,6 +300,7 @@ python run_review.py --paper your_paper.pdf --num_reviewers 3
 | `2_literature_search.ipynb` | Part 2: Agent Laboratory / PaSa 실습 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/2_literature_search.ipynb) |
 | `3_related_work.ipynb` | Part 3: LitLLM 실습 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/3_related_work.ipynb) |
 | `4_peer_review.ipynb` | Part 4: AgentReview 실습 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/4_peer_review.ipynb) |
+| `5_advanced_review.ipynb` | Part 5: Few-Shot Learning (선택) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/5_advanced_review.ipynb) |
 
 ### 각 노트북 상세 구조
 

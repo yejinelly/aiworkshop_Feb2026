@@ -27,6 +27,9 @@ dependencies = [
 
     # PDF Processing (for AgentReview)
     "PyPDF2>=3.0.0",
+
+    # Dataset Access (for PeerRead in Part 5)
+    "datasets>=2.14.0",
 ]
 
 [project.optional-dependencies]
