@@ -42,3 +42,4 @@ agentreview/
 *.jpg
 !examples/*.pdf
 !examples/*.txt
+!data/ICLR2022/paper/**/*.pdf
