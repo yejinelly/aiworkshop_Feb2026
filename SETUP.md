@@ -37,9 +37,26 @@ python -m venv .venv
 
 ### 4. 패키지 설치
 
+**방법 1: uv 사용 (권장, 빠름)**
 ```bash
+# uv 설치 (없는 경우)
+curl -LsSf https://astral.sh/uv/install.sh | sh  # macOS/Linux
+# Windows: https://docs.astral.sh/uv/getting-started/installation/
+
+# 패키지 설치 (1-2분)
+uv pip install -e .
+```
+
+**방법 2: pip 사용 (일반)**
+```bash
+# 패키지 설치 (3-5분)
+pip install -e .
+
+# 또는 requirements.txt 사용
 pip install -r requirements.txt
 ```
+
+💡 **참고**: `uv`는 pip보다 10-100배 빠른 Python 패키지 매니저입니다
 
 ### 5. API Key 설정
 
@@ -137,17 +154,30 @@ Cell 3: ✅ Colab Secrets에서 API Key 로딩 완료
 ### Q1. "No module named 'xxx'" 에러
 ```bash
 # 가상환경이 활성화되어 있는지 확인
-which python  # macOS/Linux
-where python  # Windows
+which python  # macOS/Linux → .venv/bin/python 출력되어야 함
+where python  # Windows → .venv\Scripts\python.exe 출력되어야 함
+
+# 가상환경 재활성화
+source .venv/bin/activate  # macOS/Linux
+.venv\Scripts\activate     # Windows
 
 # 패키지 재설치
-pip install -r requirements.txt
+uv pip install -e .
+# 또는: pip install -e .
 ```
 
-### Q2. Kernel이 안 보여요
+### Q2. VSCode에서 Kernel이 안 보여요
 ```bash
+# venv 활성화 후
+source .venv/bin/activate  # macOS/Linux
+
+# ipykernel 설치 확인
+pip install ipykernel
+
 # Jupyter kernel 수동 등록
-python -m ipykernel install --user --name=aiworkshop
+python -m ipykernel install --user --name=aiworkshop --display-name="Python (.venv)"
+
+# VSCode 재시작 후 노트북에서 "Python (.venv)" 선택
 ```
 
 ### Q3. API Key가 로딩 안 돼요 (로컬)

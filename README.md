@@ -353,8 +353,9 @@ source .venv/bin/activate
 python -m venv .venv
 .venv\Scripts\activate
 
-# 3. 패키지 설치
-pip install -r requirements.txt
+# 3. 패키지 설치 (uv 권장, 또는 pip)
+uv pip install -e .
+# 또는: pip install -e .
 
 # 4. API Key 설정
 # 4-1. .env.example을 .env로 복사

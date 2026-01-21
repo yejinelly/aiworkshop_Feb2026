@@ -1,0 +1,47 @@
+[project]
+name = "aiworkshop-feb2026"
+version = "0.1.0"
+description = "AI Literature Review Agent Workshop - SNU AI Psychology"
+requires-python = ">=3.10"
+dependencies = [
+    # Jupyter & Notebook
+    "jupyterlab>=4.0.0",
+    "notebook>=7.0.0",
+    "ipykernel>=6.0.0",
+    "ipywidgets>=8.0.0",
+
+    # Environment & Config
+    "python-dotenv>=1.1.1",
+
+    # LLM APIs
+    "google-generativeai>=0.8.5",
+    "openai>=1.0.0",
+
+    # Academic APIs & Data
+    "requests>=2.31.0",
+    "semanticscholar>=0.8.0",
+    "arxiv>=2.0.0",
+
+    # Data Processing
+    "pandas>=2.0.0",
+
+    # PDF Processing (for AgentReview)
+    "PyPDF2>=3.0.0",
+]
+
+[project.optional-dependencies]
+# Advanced features (Part 2, 3)
+advanced = [
+    "langchain>=0.1.0",
+    "langgraph>=0.1.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+only-include = ["notebooks"]
+
+[tool.uv]
+dev-dependencies = []
