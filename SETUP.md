@@ -92,7 +92,7 @@ Copy-Item .env.example .env
 
 ```bash
 # .env 파일
-GEMINI_API_KEY=AIzaSyAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQ  # <- 실제 key
+GEMINI_API_KEY=your_gemini_api_key_here  # <- 실제 key로 교체
 OPENAI_API_KEY=your_openai_api_key_here  # 선택사항
 ```
 
