@@ -63,7 +63,7 @@ jupyter lab
 
 ## 발표 슬라이드
 
-📊 [Google Slides 링크](https://docs.google.com/presentation/d/YOUR_SLIDE_ID/edit?usp=sharing)
+📊 [Google Slides 링크](https://docs.google.com/presentation/d/1cF2m44wX2urfTYOYEgMuRvpCeogYgtN8HEZMFhlEwO4/edit?usp=sharing)
 
 ---
 
