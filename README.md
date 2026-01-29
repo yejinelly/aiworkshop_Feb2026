@@ -4,21 +4,66 @@
 
 ---
 
+## 준비물
+
+| 준비물 | 링크 | 필수 |
+|--------|------|:----:|
+| **Gemini API Key** | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) | ✅ |
+| **Semantic Scholar API Key** | [semanticscholar.org/product/api](https://www.semanticscholar.org/product/api) | 권장 |
+| **OpenAI API Key** (Part 3용) | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) | 선택 |
+| 본인 연구 주제 또는 논문 초안 | - | ✅ |
+
+---
+
 ## 워크샵 개요
 
-| Part | 내용 | 시간 |
-|------|------|------|
-| **Part 1** | 오픈소스 Literature Agent 개관 | 10분 |
-| **Part 2** | Deep Dive: 문헌 검색 (Agent Laboratory / PaSa) | 25분 |
-| **Part 3** | Deep Dive: Related Work 생성 (LitLLM) | 25분 |
-| **Part 4** | Deep Dive: Peer Review 시뮬레이션 (AgentReview) | 20분 |
-| **Part 5** | Advanced: Few-Shot Learning (선택) | 15분 |
-| **Part 6** | 토론: 자신의 연구에 맞게 커스텀하기 | 10분 |
+| Part | 내용 | 노트북 | Colab |
+|------|------|--------|-------|
+| **1** | 학술 API 개관 (Semantic Scholar, arXiv, PubMed) | `1_overview.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/1_overview.ipynb) |
+| **2** | Citation Crawler + SPECTER2 Selector | `2_crawlers_and_selector.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/2_crawlers_and_selector.ipynb) |
+| **2.5** | AI 리뷰용 샘플 논문 준비 | `2.5_manuscript_preparation.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/2.5_manuscript_preparation.ipynb) |
+| **3** | AI Paper Review Agent | `3_paper_review_agent.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/3_paper_review_agent.ipynb) |
+| **4** | Few-shot vs Agentic 리뷰 비교 | `4_review_comparison.ipynb` | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/4_review_comparison.ipynb) |
 
-### 각 Deep Dive 구성
-1. **파악하기** - 코드 구조, 핵심 모듈, 데이터 흐름
-2. **써보기** - 실제 논문으로 실행
-3. **바꿔보기** - 프롬프트/설정 수정해서 결과 비교
+```
+1. Overview   → 학술 API로 논문 검색
+       ↓
+2. Crawlers   → Citation 네트워크 탐색 + SPECTER2 관련성 평가
+       ↓
+2.5 Manuscript → AI 리뷰용 샘플 논문 준비
+       ↓
+3. Review     → AI 논문 리뷰 받기 (agentic-paper-review)
+       ↓
+4. Comparison → Few-shot vs Agentic 비교 분석
+```
+
+---
+
+## 환경 설정
+
+### 로컬 환경 (권장)
+
+```bash
+git clone https://github.com/yejinelly/aiworkshop_Feb2026.git
+cd aiworkshop_Feb2026
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -e .
+cp .env.example .env       # .env 파일 열고 API key 입력
+jupyter lab
+```
+
+### Google Colab (백업)
+
+1. 위 테이블에서 Colab 배지 클릭
+2. 좌측 🔑 아이콘 > Colab Secrets에 API Key 추가
+3. Cell 실행
+
+---
+
+## 발표 슬라이드
+
+📊 [Google Slides 링크](https://docs.google.com/presentation/d/YOUR_SLIDE_ID/edit?usp=sharing)
 
 ---
 
@@ -26,491 +71,87 @@
 
 ```
 aiworkshop_Feb2026/
-├── README.md                        # 워크샵 가이드
-├── notebooks/
-│   ├── 1_overview.ipynb             # Part 1: 에이전트 개관
-│   ├── 2_literature_search.ipynb    # Part 2: 문헌 검색
-│   ├── 3_related_work.ipynb         # Part 3: Related Work
-│   ├── 4_peer_review.ipynb          # Part 4: Peer Review
-│   └── 5_advanced_review.ipynb      # Part 5: Few-Shot Learning (선택)
-└── examples/
-    ├── sample_abstract.txt          # 테스트용 초록
-    └── sample_paper.pdf             # 테스트용 논문
+├── notebooks/                          # 실습 노트북 (위 테이블 참조)
+├── input/
+│   ├── sample_method.md                # 샘플 Method (기후불안 연구)
+│   └── human_reviews/                  # Transparent Peer Review 저장
+└── outputs/                            # 실습 결과 저장
 ```
-
-**실습에서 clone할 저장소**
-- `github.com/SamuelSchmidgall/AgentLaboratory` - 문헌 검색
-- `github.com/bytedance/pasa` - 논문 검색
-- `github.com/ServiceNow/litllm` - Related Work
-- `github.com/ahren09/agentreview` - Peer Review
 
 ---
 
-## Part 1: 오픈소스 Literature Agent 개관 (15분)
+## Part 1: 학술 API 개관
 
-> 코드가 공개된 에이전트만 다룸. 웹 서비스(Elicit, Consensus 등)는 제외.
-
-| 프로젝트 | Stars | 용도 | 검색 DB |
-|----------|------:|------|---------|
-| [GPT-Researcher](https://github.com/assafelovic/gpt-researcher) | 24.9k | 웹검색 → 보고서 | 웹 (Tavily) |
-| [AI-Scientist](https://github.com/SakanaAI/AI-Scientist) | 12k | 아이디어→논문 자동화 | Semantic Scholar |
-| [PaperQA2](https://github.com/Future-House/paper-qa) | 8k | PDF RAG Q&A | Semantic Scholar |
-| [**Agent Laboratory**](https://github.com/SamuelSchmidgall/AgentLaboratory) | 5.2k | **문헌 검색** | **arXiv ⭐** |
-| [**PaSa**](https://github.com/bytedance/pasa) | 1.5k | **논문 검색 특화** | **arXiv + Scholar ⭐** |
-| [**AgentReview**](https://github.com/ahren09/agentreview) | - | **Peer Review 시뮬레이션** | 없음 (EMNLP 2024) |
-| [**LitLLM**](https://github.com/ServiceNow/litllm) | - | **Related Work 생성** | Semantic Scholar (TMLR 2024) |
-
-→ 오늘 집중:
-- **문헌 검색**: Agent Laboratory, PaSa (arXiv 직접 검색)
-- **논문 작성**: LitLLM (Related Work), AgentReview (Peer Review)
+| API | Key 필요 | 특징 |
+|-----|----------|------|
+| **Semantic Scholar** | 선택 (권장) | 인용 네트워크, 추천 기능 |
+| **arXiv** | 불필요 | 프리프린트, CS/물리/수학 |
+| **PubMed** | 불필요 | 의학/심리학 특화 |
 
 ---
 
-## Part 2: Deep Dive - 문헌 검색 (25분)
+## Part 2: Citation Crawler + Selector
 
-> **목표**: arXiv/Scholar에서 관련 논문 자동 검색
-
-### Agent Laboratory
-
-```
-AgentLaboratory/
-├── agents/
-│   └── literature_agent.py   # 문헌 검색 에이전트
-├── tools/
-│   └── arxiv_search.py       # arXiv API 래퍼
-└── run.py
-```
-
-**핵심 기능:** arXiv API로 관련 논문 검색 및 요약
-💡 실험 설계/보고서 기능도 있지만, 워크샵에서는 **문헌 검색**만 사용
-
-```bash
-git clone https://github.com/SamuelSchmidgall/AgentLaboratory
-cd AgentLaboratory && pip install -r requirements.txt
-python run.py --agent literature --topic "your research topic"
-```
-
-### PaSa (Paper Search Agent)
-
-```
-pasa/
-├── agents/
-│   ├── crawler.py     # 논문 크롤링 에이전트
-│   └── selector.py    # 관련성 평가 에이전트
-├── search/
-│   ├── arxiv.py       # arXiv 검색
-│   └── scholar.py     # Google Scholar 검색
-└── run_search.py
-```
-
-**핵심 흐름:**
-1. 연구 질문 입력
-2. Crawler가 arXiv/Scholar 검색
-3. Selector가 관련성 평가 (PPO 학습됨)
-4. 순위화된 논문 리스트 반환
-
-```bash
-git clone https://github.com/bytedance/pasa
-cd pasa && pip install -r requirements.txt
-python run_search.py --query "your research question"
-```
-
-### 바꿔보기: 커스텀
-
-| 수정 포인트 | 파일 | 아이디어 |
-|-------------|------|----------|
-| 검색 DB | `arxiv_search.py` | PubMed API 추가 |
-| 검색 쿼리 | `literature_agent.py` | 심리학 키워드 템플릿 |
-| 필터링 | `selector.py` | 연도/저널 필터 추가 |
-
----
-
-## Part 3: Deep Dive - LitLLM (25분)
-
-> **목표**: Related Work 섹션 초안 자동 생성
-
-### 3-1. 파악하기: 코드 구조
-
-```
-litllm/
-├── litllm/
-│   ├── retriever.py      # 관련 논문 검색
-│   ├── summarizer.py     # 논문 요약
-│   ├── writer.py         # Related Work 생성
-│   └── prompts/          # 프롬프트 템플릿
-├── data/
-│   └── arxiv_cache/      # 논문 캐시
-└── generate_related_work.py
-```
-
-**핵심 흐름:**
-1. 논문 초안 입력 → 키워드 추출
-2. Semantic Scholar API로 관련 논문 검색
-3. 각 논문 요약
-4. Related Work 문단 생성 (인용 포함)
-
-### 3-2. 써보기: 실행
-
-```bash
-# 설치
-git clone https://github.com/ServiceNow/litllm
-cd litllm
-pip install -r requirements.txt
-
-# 실행
-python generate_related_work.py \
-  --input your_draft.txt \
-  --output related_work.md \
-  --num_papers 10
-```
-
-### 3-3. 바꿔보기: 커스텀
-
-| 수정 포인트 | 파일 | 아이디어 |
-|-------------|------|----------|
-| 검색 DB | `retriever.py` | PubMed 추가 (심리학용) |
-| 요약 스타일 | `prompts/summary.txt` | "방법론 중심으로" |
-| 작성 스타일 | `prompts/writer.txt` | "APA 스타일로", "비판적 톤으로" |
-| 언어 | `writer.py` | 한글 Related Work |
-
----
-
-## Part 4: Deep Dive - AgentReview (20분)
-
-> **목표**: 논문 제출 전 AI 피드백 받기
-
-### 4-1. 파악하기: 코드 구조
-
-```
-agentreview/
-├── agentreview/
-│   ├── arena.py          # 메인 시뮬레이션 루프
-│   ├── paper.py          # 논문 파싱
-│   ├── reviewer.py       # 리뷰어 에이전트
-│   └── prompts/          # 리뷰어 페르소나
-├── data/
-│   └── iclr_reviews/     # 실제 ICLR 리뷰 데이터
-└── run_review.py         # 실행 스크립트
-```
-
-**핵심 흐름:**
-1. 논문 PDF → 섹션별 파싱
-2. 리뷰어 에이전트 생성 (다양한 페르소나)
-3. 각 리뷰어가 독립적으로 평가
-4. 점수 + 코멘트 집계
-
-### 4-2. 써보기: 실행
-
-```bash
-git clone https://github.com/ahren09/agentreview
-cd agentreview && pip install -r requirements.txt
-python run_review.py --paper your_paper.pdf --num_reviewers 3
-```
-
-### 4-3. 바꿔보기: 커스텀
-
-| 수정 포인트 | 파일 | 아이디어 |
-|-------------|------|----------|
-| 리뷰어 페르소나 | `prompts/reviewer.txt` | "심리학 저널 리뷰어처럼" |
-| 평가 기준 | `reviewer.py` | novelty, methodology, clarity 가중치 |
-| 출력 형식 | `arena.py` | 한글 리뷰, 체크리스트 형식 |
-
----
-
-## Part 5: Advanced - Few-Shot Learning (15분, 선택)
-
-> **목표**: PeerRead 데이터셋으로 리뷰 품질 향상
-
-⚠️ **선택 실습**: Part 4 완료 후 시간이 있을 때 진행하세요.
-
-### 5-1. 파악하기: PeerRead 데이터셋
-
-**PeerRead**는 최초의 공개 peer review 데이터셋 (NAACL 2018)
-
-| 항목 | 내용 |
+| 도구 | 역할 |
 |------|------|
-| **규모** | 14K+ 논문, 10K+ expert reviews |
-| **출처** | ACL, NeurIPS, ICLR |
-| **접근** | Hugging Face에서 즉시 사용 가능 |
+| [paperscraper](https://github.com/jannisborn/paperscraper) | arXiv/PubMed 키워드 검색 |
+| [Semantic Scholar API](https://api.semanticscholar.org/) | 인용/참조/추천 데이터 |
+| [OpenAlex API](https://docs.openalex.org/) | 출판사 제한 없는 References |
+| [SPECTER2](https://github.com/allenai/SPECTER2) | 논문 임베딩 → 관련성 점수 |
 
-**Why PeerRead?**
-- Review-CoT (142k reviews)는 공개 안됨
-- PeerRead는 Hugging Face 3줄로 로딩 가능
-- Few-shot learning에 충분한 품질
-
-### 5-2. 써보기: Few-Shot Learning
-
-```python
-from datasets import load_dataset
-
-# PeerRead 로딩
-peerread = load_dataset("allenai/peer_read", "full", split="train")
-
-# 고품질 리뷰 5개 샘플링
-examples = [r for r in peerread if r['RECOMMENDATION'] == 'accept'][:5]
-
-# Few-shot 프롬프트 구성
-prompt = f"""
-Here are examples of high-quality peer reviews:
-
-Example 1: {examples[0]['COMMENTS']}
-Example 2: {examples[1]['COMMENTS']}
-...
-
-Now review this paper:
-{your_paper}
-"""
-```
-
-### 5-3. 바꿔보기: 분야별 커스텀
-
-| 수정 포인트 | 방법 |
-|-------------|------|
-| **분야 필터링** | 키워드로 심리학 리뷰만 추출 |
-| **길이 조절** | 짧은/긴 리뷰로 스타일 선택 |
-| **accept/reject** | 엄격한 리뷰 vs 긍정적 리뷰 |
-
-**참고 자료**:
-- [PeerRead GitHub](https://github.com/allenai/PeerRead)
-- [PeerRead Paper](https://arxiv.org/abs/1804.09635)
+**Crawler 흐름**: paperscraper 검색 → 시드 선택 → References/Citations/Related 확장 → SPECTER2 필터링 → Top 10 추천
 
 ---
 
-## Part 6: 토론 - 커스텀 아이디어 (10분)
+## Part 2.5: 논문 준비
 
-### 자신의 연구에 맞게 바꾼다면?
+| 옵션 | 현재 상태 | 생성 내용 |
+|------|----------|----------|
+| **A** | 완성된 초고 있음 | PDF/DOCX → MD 변환 |
+| **B** | Method만 있음 | Intro + Results + Discussion 생성 |
+| **C** | 논문 없음 | 전체 논문 생성 (영어) |
 
-| 도구 | 커스텀 아이디어 |
-|------|----------------|
-| **Agent Laboratory** | PubMed API 모듈 추가 |
-| **PaSa** | 심리학 저널 필터링 |
-| **LitLLM** | 메타분석용 "효과크기 요약" 모드 |
-| **AgentReview** | PeerRead few-shot으로 품질 개선 |
-| **파이프라인** | 검색→Related Work→Review 연결
+`input/sample_method.md`: 기후불안 청소년 종단연구 Method 예시 포함
 
 ---
 
-## Google Colab 실습 노트북
+## Part 3: AI Paper Review Agent
 
-### 노트북 구성
+[agentic-paper-review](https://github.com/debashis1983/agentic-paper-review) - 9노드 LangGraph 워크플로우 (Spearman ρ = 0.74)
 
-| 노트북 | 내용 | Colab 링크 |
-|--------|------|------------|
-| `1_overview.ipynb` | Part 1: 에이전트 개관 + API 테스트 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/1_overview.ipynb) |
-| `2_literature_search.ipynb` | Part 2: Agent Laboratory / PaSa 실습 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/2_literature_search.ipynb) |
-| `3_related_work.ipynb` | Part 3: LitLLM 실습 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/3_related_work.ipynb) |
-| `4_peer_review.ipynb` | Part 4: AgentReview 실습 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/4_peer_review.ipynb) |
-| `5_advanced_review.ipynb` | Part 5: Few-Shot Learning (선택) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/5_advanced_review.ipynb) |
-
-### 각 노트북 상세 구조
-
-```
-📓 X_tool_name.ipynb
-
-[Cell 1-3] 🔧 SETUP
-├── Cell 1: Google Drive Mount + 작업 폴더 설정
-├── Cell 2: 패키지 설치 (!pip install ...)
-└── Cell 3: API Key 로딩 (dotenv 또는 Colab Secrets)
-
-[Cell 4-8] 📖 1. 파악하기 - 코드 구조 이해
-├── Cell 4: [Markdown] 프로젝트 구조 다이어그램
-├── Cell 5: [Markdown] 핵심 흐름 설명
-├── Cell 6: 핵심 모듈 임포트 + 클래스 확인
-├── Cell 7: 주요 함수 시그니처 출력
-└── Cell 8: [Markdown] 💡 질문: "이 구조에서 어떤 부분을 바꾸면 좋을까?"
-
-[Cell 9-14] ▶️ 2. 써보기 - 실행 실습
-├── Cell 9: [Markdown] 샘플 데이터 설명
-├── Cell 10: 샘플 데이터로 실행 (발표자 데모)
-├── Cell 11: 결과 출력 + 시각화
-├── Cell 12: [Markdown] "DIY: 본인 데이터로 실행해보세요"
-├── Cell 13: # DIY - 빈 셀 (참가자 실습)
-└── Cell 14: # DIY - 결과 확인 셀
-
-[Cell 15-20] 🔨 3. 바꿔보기 - 커스텀 실습
-├── Cell 15: [Markdown] 수정 포인트 표
-├── Cell 16: 프롬프트 수정 예시 (Before/After)
-├── Cell 17: # DIY - 프롬프트 수정 실습
-├── Cell 18: 설정 파라미터 변경 예시
-├── Cell 19: # DIY - 설정 변경 실습
-└── Cell 20: 결과 비교 (원본 vs 수정본)
-
-[Cell 21-22] 💡 4. 토론
-├── Cell 21: [Markdown] 토론 질문 3개
-└── Cell 22: [Markdown] 다음 단계 제안
-```
-
-### 노트북 작성 패턴 (이전 워크샵 참고)
-
-```python
-# === Cell: Setup ===
-from google.colab import drive
-drive.mount('/content/drive/')
-
-import os
-os.chdir("/content/drive/MyDrive/aiworkshop_Feb2026/")
-
-# API Key 로딩 (dotenv 방식)
-!pip install python-dotenv -q
-from dotenv import load_dotenv
-load_dotenv()
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-
-# === Cell: DIY 템플릿 ===
-# DIY: 본인 연구 주제로 실행해보세요
-# 힌트: query 변수만 바꾸면 됩니다
-
-query = "your research topic here"  # <- 이 부분 수정
-
-# 아래 코드는 그대로 실행
-result = search_papers(query)
-display(result)
-```
-
-### 실습 환경 옵션
-
-| 옵션 | 장점 | 단점 |
-|------|------|------|
-| **Google Colab** | 설치 불필요, GPU 무료 | API key 입력 필요 |
-| **로컬 venv** | 환경 커스텀 자유 | 설치 필요 |
-| **GitHub Codespaces** | 브라우저에서 VSCode | 월 60시간 무료 |
-
-### 로컬 vs Colab 비교
-
-| 항목 | 로컬 환경 | Google Colab |
-|------|----------|--------------|
-| **설치** | Python, 패키지 필요 | 불필요 ✅ |
-| **준비 시간** | 15분 | 3분 ✅ |
-| **Cursor 사용** | 가능 ✅ | 불가능 |
-| **워크샵 후 활용** | 그대로 사용 ✅ | 세션마다 초기화 |
-| **커스텀** | 자유로움 ✅ | 제한적 |
-| **추천 대상** | 개발 환경 있는 분 | 빠른 실습 원하는 분 |
-
-**권장:** 로컬 환경 (Cursor + Claude Code 활용 가능)
-**백업:** Colab (설치 실패 시)
+**평가 차원**: Soundness (1-4), Presentation (1-4), Contribution (1-4), Overall (1-10)
 
 ---
 
-## 환경 설정
+## Part 4: Few-shot vs Agentic 비교
 
-### 🖥️ 로컬 환경 (권장)
+| 항목 | Few-shot Reviewer | agentic-paper-review |
+|------|-------------------|---------------------|
+| 기반 | Transparent Peer Review 예시 | 9노드 워크플로우 |
+| 모델 | gemini-2.5-flash | OpenAI API |
+| 웹검색 | ❌ | ✅ |
+| Few-shot 예시 | ✅ | ❌ |
 
-**준비 시간: 15분**
-
-```bash
-# 1. 저장소 클론
-git clone https://github.com/yejinelly/aiworkshop_Feb2026.git
-cd aiworkshop_Feb2026
-
-# 2. 가상환경 생성 (macOS/Linux)
-python -m venv .venv
-source .venv/bin/activate
-
-# Windows
-python -m venv .venv
-.venv\Scripts\activate
-
-# 3. 패키지 설치 (uv 권장, 또는 pip)
-uv pip install -e .
-# 또는: pip install -e .
-
-# 4. API Key 설정
-# 4-1. .env.example을 .env로 복사
-cp .env.example .env
-
-# 4-2. .env 파일을 열고 your_gemini_api_key_here를 실제 key로 교체
-# GEMINI_API_KEY=실제_발급받은_key
-
-# 5. VSCode/Cursor에서 notebooks/ 폴더의 .ipynb 파일 열기
-```
-
-**장점:**
-- Cursor + Claude Code 사용 가능
-- 워크샵 후에도 그대로 활용 가능
-- 커스텀 자유로움
-
-**상세 가이드:** [SETUP.md](SETUP.md)
+**Transparent Peer Review 소스**: [Communications Psychology](https://www.nature.com/commspsychol/), [Nature Communications](https://www.nature.com/ncomms/), [OpenReview](https://openreview.net/)
 
 ---
 
-### ☁️ Google Colab (백업)
+## 참고 논문
 
-**준비 시간: 3분**
-
-로컬 환경 설정이 어려운 경우 Colab을 사용하세요.
-
-1. Colab 배지 클릭 (각 노트북 링크 참고)
-2. 좌측 🔑 아이콘 > Colab Secrets에 `GEMINI_API_KEY` 추가
-3. Cell 실행
-
-**장점:**
-- 설치 불필요
-- GPU 무료 사용
-- 즉시 실습 가능
+- [PaSa: An LLM Agent for Comprehensive Academic Paper Search](https://arxiv.org/abs/2501.10120)
+- [SPECTER2: SciRepEval: A Multi-Format Benchmark](https://arxiv.org/abs/2211.13308)
+- [AgentReview: Exploring Peer Review Dynamics with LLM Agents](https://arxiv.org/abs/2406.12708)
 
 ---
 
-## 준비물
+## 결과 제출 & 공유
 
-### 발표자
-- [ ] 4개 도구 로컬 실행 테스트 완료
-- [ ] 데모용 논문 PDF + 초록 txt
-- [ ] OpenAI API key
-- [ ] Colab 노트북 배포 확인
-
-### 참가자
-
-**필수 준비:**
-- [ ] **Gemini API Key** 발급 (5분, 무료)
-  - https://aistudio.google.com/apikey
-  - [발급 가이드](SETUP.md#5-api-key-설정)
-- [ ] 본인 연구 주제 또는 논문 초안 (실습용)
-
-**환경 선택 (둘 중 하나):**
-- [ ] **로컬 환경** (권장)
-  - Python 3.10+, VSCode/Cursor
-  - [설정 가이드](SETUP.md#옵션-a-로컬-환경-권장)
-
-- [ ] **Google Colab** (백업)
-  - Google 계정만 있으면 됨
-  - [사용 가이드](SETUP.md#옵션-b-google-colab-백업)
-
-**선택사항:**
-- [ ] OpenAI API key (Part 2, 3의 고급 기능용)
+| Part | 제출 폼 | 결과 시트 |
+|------|---------|----------|
+| **2** | [Google Form](https://forms.gle/dYNbvMeeBMqxSmLa7) | [결과 보기](https://docs.google.com/spreadsheets/d/15jyTrqGY7Po5iLcXFrv_kwyUNkCC9YMX6kypPMs-bAc/edit?usp=sharing) |
+| **3** | [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfciPtMCZTSNyGvutdFGSdcUjKSdu98Vm7gVPe6TvVcGQKK2g/viewform) | [결과 보기](https://docs.google.com/spreadsheets/d/1wPGTOPGF5yvWQTimikr-rg2VExXiHCE0Xn2EVkffWfo/edit?usp=sharing) |
+| **4** | [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSeYrzmXSEmoddzInY5j5xagy4cfa-MwolZYZYvm6_B7gXvnNQ/viewform) | - |
 
 ---
 
-## API Key 신청 링크
-
-| API | 링크 | 비용 | 비고 |
-|-----|------|------|------|
-| **Gemini** | [aistudio.google.com](https://aistudio.google.com/apikey) | 무료 | LLM용 |
-| **Semantic Scholar** | [semanticscholar.org/product/api](https://www.semanticscholar.org/product/api) | 무료 | rate limit 완화 |
-| **GitHub** | [github.com/settings/tokens](https://github.com/settings/tokens) | 무료 | 60→5000 req/hr |
-| **OpenAlex** | 불필요 | 무료 | polite pool: 이메일만 |
-| **PubMed** | 불필요 | 무료 | 무제한 |
-| **arXiv** | 불필요 | 무료 | 무제한 |
-| **OSF** | 불필요 | 무료 | 무제한 |
-
----
-
-## 참고 자료
-
-### 오늘 다루는 프로젝트
-- [Agent Laboratory](https://github.com/SamuelSchmidgall/AgentLaboratory) - arXiv 검색, 5.2k stars
-- [PaSa](https://github.com/bytedance/pasa) - arXiv + Scholar, ByteDance
-- [LitLLM](https://github.com/ServiceNow/litllm) - Related Work 생성, TMLR 2024
-- [AgentReview](https://github.com/ahren09/agentreview) - Peer Review, EMNLP 2024
-
-### 기타 오픈소스
-- [GPT-Researcher](https://github.com/assafelovic/gpt-researcher) - 24.9k stars
-- [AI-Scientist](https://github.com/SakanaAI/AI-Scientist) - 12k stars
-- [PaperQA2](https://github.com/Future-House/paper-qa) - 8k stars
-
-### API 문서
-- [Semantic Scholar API](https://api.semanticscholar.org/)
-- [OpenAI API](https://platform.openai.com/docs)
-
----
-
-*Last updated: 2026-01-19*
+*Last updated: 2026-01-29*
