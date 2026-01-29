@@ -150,7 +150,7 @@ aiworkshop_Feb2026/
 |------|---------|----------|
 | **2** | [Google Form](https://forms.gle/dYNbvMeeBMqxSmLa7) | [결과 보기](https://docs.google.com/spreadsheets/d/15jyTrqGY7Po5iLcXFrv_kwyUNkCC9YMX6kypPMs-bAc/edit?usp=sharing) |
 | **3** | [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfciPtMCZTSNyGvutdFGSdcUjKSdu98Vm7gVPe6TvVcGQKK2g/viewform) | [결과 보기](https://docs.google.com/spreadsheets/d/1wPGTOPGF5yvWQTimikr-rg2VExXiHCE0Xn2EVkffWfo/edit?usp=sharing) |
-| **4** | [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSeYrzmXSEmoddzInY5j5xagy4cfa-MwolZYZYvm6_B7gXvnNQ/viewform) | - |
+| **4** | [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSeYrzmXSEmoddzInY5j5xagy4cfa-MwolZYZYvm6_B7gXvnNQ/viewform) | [결과 보기](https://docs.google.com/spreadsheets/d/1v9ch3qRiGINOdf-bZkmrxxdt-QZKVQrDejvJ-1mxSbI/edit?gid=1333882645#gid=1333882645) |
 
 ---
 
