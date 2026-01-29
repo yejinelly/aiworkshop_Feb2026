@@ -307,8 +307,8 @@ IMPORTANT: Use the exact scales above (Soundness/Presentation/Contribution: 1-4,
 def get_llm(model: str = "gpt-4o", temperature: float = 0.3):
     """Get LLM instance based on available API keys (Gemini > OpenAI > Anthropic)."""
     if os.getenv("GOOGLE_API_KEY"):
-        # Gemini 우선 (무료)
-        return ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=temperature)
+        # Gemini 우선 (무료) - 1.5-flash는 rate limit이 더 높음
+        return ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=temperature)
     elif os.getenv("OPENAI_API_KEY"):
         return ChatOpenAI(model=model, temperature=temperature)
     else:
