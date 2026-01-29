@@ -47,5 +47,9 @@ agentreview/
 # Outputs folder - 참가자별 결과 파일 제외
 outputs/
 
+# Human reviews - 참가자별 수집 리뷰 제외 (예시 파일 제외)
+input/human_reviews/*
+!input/human_reviews/example_review.pdf
+
 # Old/backup files
 _old/
