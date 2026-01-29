@@ -53,3 +53,7 @@ input/human_reviews/*
 
 # Old/backup files
 _old/
+
+# Personal manuscripts (sample_* 제외)
+input/my_*.md
+input/my_*.pdf
