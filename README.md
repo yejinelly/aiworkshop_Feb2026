@@ -9,9 +9,9 @@
 | 준비물 | 링크 | 필수 |
 |--------|------|:----:|
 | **Gemini API Key** | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) | ✅ |
-| **Semantic Scholar API Key** | [semanticscholar.org/product/api](https://www.semanticscholar.org/product/api) | 권장 |
+| **Semantic Scholar API Key** | [semanticscholar.org/product/api](https://www.semanticscholar.org/product/api) | ✅ |
 | **OpenAI API Key** (Part 3용) | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) | 선택 |
-| 본인 연구 주제 또는 논문 초안 | - | ✅ |
+| 본인 연구 주제 또는 논문 초안 | - | 권장 |
 
 ---
 
