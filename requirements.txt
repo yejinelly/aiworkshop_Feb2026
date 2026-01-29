@@ -16,8 +16,9 @@ arxiv>=2.0.0
 # Data Processing
 pandas>=2.0.0
 
-# PDF Processing (for AgentReview)
+# File Processing (PDF, Word)
 PyPDF2>=3.0.0
+python-docx>=1.0.0
 
 # Dataset Access (for PeerRead in Part 5)
 datasets>=2.14.0

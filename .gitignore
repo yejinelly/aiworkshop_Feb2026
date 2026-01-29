@@ -43,3 +43,9 @@ agentreview/
 !examples/*.pdf
 !examples/*.txt
 !data/ICLR2022/paper/**/*.pdf
+
+# Outputs folder - 참가자별 결과 파일 제외
+outputs/
+
+# Old/backup files
+_old/

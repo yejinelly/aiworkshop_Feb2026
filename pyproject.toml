@@ -25,8 +25,9 @@ dependencies = [
     # Data Processing
     "pandas>=2.0.0",
 
-    # PDF Processing (for AgentReview)
+    # File Processing (PDF, Word)
     "PyPDF2>=3.0.0",
+    "python-docx>=1.0.0",
     "llama-index-readers-file>=0.1.0",
 
     # AgentReview CLI dependencies
