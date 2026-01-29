@@ -36,13 +36,12 @@ dependencies = [
 
     # Dataset Access (for PeerRead in Part 5)
     "datasets>=2.14.0",
-]
 
-[project.optional-dependencies]
-# Advanced features (Part 2, 3)
-advanced = [
-    "langchain>=0.1.0",
-    "langgraph>=0.1.0",
+    # LangGraph Agent (Notebook 3)
+    "langgraph>=0.2.0",
+    "langchain-core>=0.3.0",
+    "langchain-openai>=0.2.0",
+    "langchain-google-genai>=2.0.0",
 ]
 
 [build-system]
