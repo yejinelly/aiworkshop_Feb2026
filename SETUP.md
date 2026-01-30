@@ -214,7 +214,3 @@ python -m ipykernel install --user --name=aiworkshop --display-name="Python (.ve
 - VSCode 설치: https://code.visualstudio.com/
 - Cursor 설치: https://cursor.sh/
 - Gemini API 문서: https://ai.google.dev/
-
----
-
-**문제가 있으면 워크샵 당일 말씀해주세요!** Colab으로 바로 전환할 수 있습니다.
