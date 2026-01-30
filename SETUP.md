@@ -1,7 +1,5 @@
 # 환경 설정 가이드
 
-**AI 문헌 리뷰 에이전트 워크샵 - SNU AI Psychology**
-
 워크샵 실습은 **로컬 환경(권장)** 또는 **Google Colab(백업)**에서 진행할 수 있습니다.
 
 ---
@@ -68,8 +66,8 @@ pip install -r requirements.txt
 3. Key 복사 (클립보드에 저장)
 
 **OpenAI API (선택, 유료)**
-- Part 2, 3에서 일부 고급 기능에 사용
-- 없어도 기본 실습 가능
+- Notebook 3 (Paper Review Agent)에서 필요
+- 없어도 Notebook 1, 2, 2.5, 4는 실습 가능
 
 #### Step 2: .env 파일 생성
 
@@ -123,19 +121,16 @@ Cell 3: ✅ .env 파일에서 API Key 로딩 완료
 
 ### 1. Colab에서 노트북 열기
 
-README의 Colab 배지를 클릭하거나, 직접 URL 입력:
-
-```
-https://colab.research.google.com/github/yejinelly/aiworkshop_Feb2026/blob/master/notebooks/1_overview.ipynb
-```
+README의 Colab 배지를 클릭하세요.
 
 ### 2. API Key 설정 (Colab Secrets)
 
 1. 좌측 사이드바 🔑 아이콘 클릭
 2. "Add new secret" 클릭
-3. Name: `GEMINI_API_KEY`
-4. Value: [발급받은 API key]
-5. 저장
+3. 아래 키들을 추가:
+   - Name: `GEMINI_API_KEY`, Value: [Gemini API key]
+   - Name: `OPENAI_API_KEY`, Value: [OpenAI API key] (Notebook 3용)
+4. 저장
 
 ### 3. 노트북 실행
 

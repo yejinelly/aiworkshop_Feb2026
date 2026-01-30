@@ -39,28 +39,6 @@
 
 ---
 
-## 환경 설정
-
-### 로컬 환경 (권장)
-
-```bash
-git clone https://github.com/yejinelly/aiworkshop_Feb2026.git
-cd aiworkshop_Feb2026
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -e .
-cp .env.example .env       # .env 파일 열고 API key 입력
-jupyter lab
-```
-
-### Google Colab (백업)
-
-1. 위 테이블에서 Colab 배지 클릭
-2. 좌측 🔑 아이콘 > Colab Secrets에 API Key 추가
-3. Cell 실행
-
----
-
 ## 발표 슬라이드
 
 📊 [Google Slides 링크](https://docs.google.com/presentation/d/1cF2m44wX2urfTYOYEgMuRvpCeogYgtN8HEZMFhlEwO4/edit?usp=sharing)
@@ -136,14 +114,6 @@ aiworkshop_Feb2026/
 
 ---
 
-## 참고 논문
-
-- [PaSa: An LLM Agent for Comprehensive Academic Paper Search](https://arxiv.org/abs/2501.10120)
-- [SPECTER2: SciRepEval: A Multi-Format Benchmark](https://arxiv.org/abs/2211.13308)
-- [AgentReview: Exploring Peer Review Dynamics with LLM Agents](https://arxiv.org/abs/2406.12708)
-
----
-
 ## 결과 제출 & 공유
 
 | Part | 제출 폼 | 결과 시트 |
@@ -151,6 +121,14 @@ aiworkshop_Feb2026/
 | **2** | [Google Form](https://forms.gle/dYNbvMeeBMqxSmLa7) | [결과 보기](https://docs.google.com/spreadsheets/d/15jyTrqGY7Po5iLcXFrv_kwyUNkCC9YMX6kypPMs-bAc/edit?usp=sharing) |
 | **3** | [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfciPtMCZTSNyGvutdFGSdcUjKSdu98Vm7gVPe6TvVcGQKK2g/viewform) | [결과 보기](https://docs.google.com/spreadsheets/d/1wPGTOPGF5yvWQTimikr-rg2VExXiHCE0Xn2EVkffWfo/edit?usp=sharing) |
 | **4** | [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSeYrzmXSEmoddzInY5j5xagy4cfa-MwolZYZYvm6_B7gXvnNQ/viewform) | [결과 보기](https://docs.google.com/spreadsheets/d/1v9ch3qRiGINOdf-bZkmrxxdt-QZKVQrDejvJ-1mxSbI/edit?gid=1333882645#gid=1333882645) |
+
+---
+
+## 참고 논문
+
+- [PaSa: An LLM Agent for Comprehensive Academic Paper Search](https://arxiv.org/abs/2501.10120)
+- [SPECTER2: SciRepEval: A Multi-Format Benchmark](https://arxiv.org/abs/2211.13308)
+- [AgentReview: Exploring Peer Review Dynamics with LLM Agents](https://arxiv.org/abs/2406.12708)
 
 ---
 
