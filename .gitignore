@@ -57,3 +57,6 @@ _old/
 # Personal manuscripts (sample_* 제외)
 input/my_*.md
 input/my_*.pdf
+
+# Docs folder (발표 준비용)
+docs/
