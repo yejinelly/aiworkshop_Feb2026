@@ -41,7 +41,7 @@
 
 ## 발표 슬라이드
 
-📊 [Google Slides 링크](https://docs.google.com/presentation/d/1cF2m44wX2urfTYOYEgMuRvpCeogYgtN8HEZMFhlEwO4/edit?usp=sharing)
+📊 [Canva 슬라이드 링크](https://www.canva.com/design/DAHAFFTL3Fk/Gfo_hFFn1J2Qh_SC_0Tr5Q/view?utm_content=DAHAFFTL3Fk&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h5d297b18ab)
 
 ---
 
