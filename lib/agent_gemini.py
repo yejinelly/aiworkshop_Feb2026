@@ -306,10 +306,15 @@ IMPORTANT: Use the exact scales above (Soundness/Presentation/Contribution: 1-4,
 
 def get_llm(model: str = "gpt-4o", temperature: float = 0.3):
     """Get LLM instance based on available API keys (Gemini > OpenAI > Anthropic)."""
-    if os.getenv("GOOGLE_API_KEY"):
-        # Gemini 우선 (무료)
-        return ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=temperature)
-    elif os.getenv("OPENAI_API_KEY"):
+    google_key = os.getenv("GOOGLE_API_KEY")
+    openai_key = os.getenv("OPENAI_API_KEY")
+
+    if google_key:
+        # Gemini 우선 (무료) - gemini-2.5-flash (로컬과 동일)
+        print(f"  🔑 Using Gemini API (key: {google_key[:10]}...)")
+        return ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=temperature)
+    elif openai_key:
+        print(f"  🔑 Using OpenAI API")
         return ChatOpenAI(model=model, temperature=temperature)
     else:
         raise ValueError("No API key found. Set GOOGLE_API_KEY or OPENAI_API_KEY")
@@ -361,16 +366,20 @@ async def pdf_to_markdown_node(state: ReviewerState) -> dict:
 async def metadata_extraction_node(state: ReviewerState) -> dict:
     """Extract paper metadata and validate it's academic."""
     print("🔍 Extracting paper metadata...")
-    
+
     try:
+        print("  📡 Initializing LLM...")
         llm = get_llm()
-        
+
         # Truncate content if too long
         content = state["paper_markdown"][:15000]
-        
+        print(f"  📄 Paper content length: {len(content)} chars")
+
         prompt = METADATA_EXTRACTION_PROMPT.format(paper_content=content)
+        print("  🚀 Calling LLM for metadata extraction...")
         response = await llm.ainvoke([HumanMessage(content=prompt)])
-        
+        print("  ✅ LLM response received")
+
         # Parse JSON response
         response_text = response.content
         # Extract JSON from response
@@ -378,28 +387,36 @@ async def metadata_extraction_node(state: ReviewerState) -> dict:
         if json_match:
             metadata_dict = json.loads(json_match.group())
             metadata = PaperMetadata(**metadata_dict)
+            print(f"  📋 Extracted: {metadata.title[:50]}...")
         else:
             raise ValueError("Could not parse metadata response")
-        
+
         validation_passed = metadata.is_academic_paper
-        
+
         if not validation_passed:
+            print("  ⚠️ Document is not an academic paper")
             return {
                 "paper_metadata": metadata,
                 "validation_passed": False,
                 "errors": ["Document does not appear to be an academic paper"],
                 "current_stage": "failed"
             }
-        
+
+        print("  ✅ Validation passed - proceeding to search")
         return {
             "paper_metadata": metadata,
             "validation_passed": True,
             "current_stage": "search_query_generation"
         }
-    
+
     except Exception as e:
+        import traceback
+        error_msg = f"Metadata extraction failed: {str(e)}"
+        print(f"  ❌ ERROR: {error_msg}")
+        print(f"  📜 Traceback:\n{traceback.format_exc()}")
         return {
-            "errors": [f"Metadata extraction failed: {str(e)}"],
+            "errors": [error_msg],
+            "validation_passed": False,
             "current_stage": "failed"
         }
 
