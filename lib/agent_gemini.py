@@ -308,7 +308,7 @@ def get_llm(model: str = "gpt-4o", temperature: float = 0.3):
     """Get LLM instance based on available API keys (Gemini > OpenAI > Anthropic)."""
     if os.getenv("GOOGLE_API_KEY"):
         # Gemini 우선 (무료)
-        return ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=temperature)
+        return ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=temperature)
     elif os.getenv("OPENAI_API_KEY"):
         return ChatOpenAI(model=model, temperature=temperature)
     else:
